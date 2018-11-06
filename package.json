@@ -1,0 +1,22 @@
+{
+  "name": "express_bootstrap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "express": "^4.16.4",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "proxyquire": "^2.1.0",
+    "should": "^13.2.3",
+    "sinon": "^7.1.0"
+  }
+}
