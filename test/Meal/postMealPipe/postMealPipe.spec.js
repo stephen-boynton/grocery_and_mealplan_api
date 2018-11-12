@@ -1,7 +1,6 @@
 const sinon = require('sinon');
 const should = require('should');
 const proxyquire = require('proxyquire');
-const postMealPipe = require('../../../lib/Meal/postMealPipe/index');
 
 describe('Meal', () => {
   describe('postMealPipe', () => {
@@ -28,7 +27,7 @@ describe('Meal', () => {
       clock.restore();
     });
 
-    it('total', async () => {
+    it('should call appropriate functions, and return expect response', async () => {
       mongoStub.resolves({ insertedCount: 1 });
       const result = await pipe({ start: 'here we go' });
       should(mongoStub.callCount).equal(1);

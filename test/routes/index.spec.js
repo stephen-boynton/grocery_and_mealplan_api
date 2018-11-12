@@ -8,8 +8,9 @@ describe('routes', () => {
     let expressStub;
     let validate;
     let routeStub;
-    let postStub;
+    let methods;
     let addMeal;
+    let getMeal;
 
     beforeEach(() => {
       addMeal = {
@@ -17,14 +18,20 @@ describe('routes', () => {
         handler: 'handler'
       };
 
+      getMeal = {
+        validation: 'get',
+        handler: 'meal'
+      };
+
       validate = sandbox.stub().returns('has been validated');
 
-      postStub = {
-        post: sandbox.stub().returns('post!')
+      methods = {
+        post: sandbox.stub().returns('post!'),
+        get: sandbox.stub().returns('get!')
       };
 
       routeStub = {
-        route: sandbox.stub().returns(postStub)
+        route: sandbox.stub().returns(methods)
       };
 
       expressStub = {
@@ -35,7 +42,8 @@ describe('routes', () => {
         express: expressStub,
         'express-validation': validate,
         './handlers': {
-          addMeal
+          addMeal,
+          getMeal
         }
       });
     });
@@ -47,12 +55,14 @@ describe('routes', () => {
     it('should route with the correct params', async () => {
       should(expressStub.Router.callCount).equal(1);
       should(expressStub.Router.args).deepEqual([[]]);
-      should(routeStub.route.callCount).equal(1);
-      should(routeStub.route.args).deepEqual([['/meals/']]);
-      should(postStub.post.callCount).equal(1);
-      should(postStub.post.args).deepEqual([['has been validated', 'handler']]);
-      should(validate.callCount).equal(1);
-      should(validate.args).deepEqual([['validation']]);
+      should(routeStub.route.callCount).equal(2);
+      should(routeStub.route.args).deepEqual([['/meals/'], ['/meals/:meal/']]);
+      should(methods.post.callCount).equal(1);
+      should(methods.post.args).deepEqual([['has been validated', 'handler']]);
+      should(methods.get.callCount).equal(1);
+      should(methods.get.args).deepEqual([['has been validated', 'meal']]);
+      should(validate.callCount).equal(2);
+      should(validate.args).deepEqual([['validation'], ['get']]);
     });
   });
 });
