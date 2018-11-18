@@ -7,7 +7,9 @@ describe('util', () => {
   describe('mongo', () => {
     const sandbox = sinon.createSandbox();
     let mongo;
+    let dbClassStub;
     let dbInnerStub;
+    let getInstanceStub;
     let loggerStub;
     let innerMongo;
     let findOneReturn;
@@ -30,9 +32,12 @@ describe('util', () => {
         info: sandbox.stub(),
         error: sandbox.stub()
       };
-
+      getInstanceStub = {
+        getInstance: sandbox.stub().returns(dbInnerStub)
+      };
+      dbClassStub = sandbox.stub().returns(getInstanceStub);
       mongo = proxyquire('../../lib/util/mongo', {
-        '../db': dbInnerStub,
+        '../db': dbClassStub,
         './logger': loggerStub
       });
     });
@@ -44,6 +49,11 @@ describe('util', () => {
     describe('findAn', () => {
       it('call all appropriate methods with appropriate values', async () => {
         await mongo.genericMongoCall('findOneAsync')('collection')('data');
+        should(dbClassStub.callCount).equal(1);
+        should(dbClassStub.calledWithNew()).equal(true);
+        should(dbClassStub.args).deepEqual([[]]);
+        should(getInstanceStub.getInstance.callCount).equal(1);
+        should(getInstanceStub.getInstance.args).deepEqual([[]]);
         should(dbInnerStub.collection.callCount).equal(1);
         should(dbInnerStub.collection.args).deepEqual([['collection']]);
         should(innerMongo.findOneAsync.callCount).equal(1);
@@ -62,7 +72,11 @@ describe('util', () => {
           should('not').equal('here');
         } catch (e) {
           should(e).deepEqual(err);
-
+          should(dbClassStub.callCount).equal(1);
+          should(dbClassStub.calledWithNew()).equal(true);
+          should(dbClassStub.args).deepEqual([[]]);
+          should(getInstanceStub.getInstance.callCount).equal(1);
+          should(getInstanceStub.getInstance.args).deepEqual([[]]);
           should(dbInnerStub.collection.callCount).equal(1);
           should(dbInnerStub.collection.args).deepEqual([['collection']]);
           should(innerMongo.findOneAsync.callCount).equal(1);
@@ -80,6 +94,11 @@ describe('util', () => {
     describe('findAsync', () => {
       it('call all appropriate methods with appropriate values', async () => {
         await mongo.findAsync('collection')('data');
+        should(dbClassStub.callCount).equal(1);
+        should(dbClassStub.calledWithNew()).equal(true);
+        should(dbClassStub.args).deepEqual([[]]);
+        should(getInstanceStub.getInstance.callCount).equal(1);
+        should(getInstanceStub.getInstance.args).deepEqual([[]]);
         should(dbInnerStub.collection.callCount).equal(1);
         should(dbInnerStub.collection.args).deepEqual([['collection']]);
         should(innerMongo.findAsync.callCount).equal(1);
@@ -98,7 +117,11 @@ describe('util', () => {
           should('not').equal('here');
         } catch (e) {
           should(e).deepEqual(err);
-
+          should(dbClassStub.callCount).equal(1);
+          should(dbClassStub.calledWithNew()).equal(true);
+          should(dbClassStub.args).deepEqual([[]]);
+          should(getInstanceStub.getInstance.callCount).equal(1);
+          should(getInstanceStub.getInstance.args).deepEqual([[]]);
           should(dbInnerStub.collection.callCount).equal(1);
           should(dbInnerStub.collection.args).deepEqual([['collection']]);
           should(innerMongo.findAsync.callCount).equal(1);
@@ -116,6 +139,11 @@ describe('util', () => {
     describe('upsertManyTags', () => {
       it('call all appropriate methods with appropriate values', async () => {
         await mongo.upsertManyTags('collection')('data', 'meal');
+        should(dbClassStub.callCount).equal(1);
+        should(dbClassStub.calledWithNew()).equal(true);
+        should(dbClassStub.args).deepEqual([[]]);
+        should(getInstanceStub.getInstance.callCount).equal(1);
+        should(getInstanceStub.getInstance.args).deepEqual([[]]);
         should(dbInnerStub.collection.callCount).equal(1);
         should(dbInnerStub.collection.args).deepEqual([['collection']]);
         should(innerMongo.updateManyAsync.callCount).equal(1);
@@ -136,7 +164,11 @@ describe('util', () => {
           should('not').equal('here');
         } catch (e) {
           should(e).deepEqual(err);
-
+          should(dbClassStub.callCount).equal(1);
+          should(dbClassStub.calledWithNew()).equal(true);
+          should(dbClassStub.args).deepEqual([[]]);
+          should(getInstanceStub.getInstance.callCount).equal(1);
+          should(getInstanceStub.getInstance.args).deepEqual([[]]);
           should(dbInnerStub.collection.callCount).equal(1);
           should(dbInnerStub.collection.args).deepEqual([['collection']]);
           should(innerMongo.updateManyAsync.callCount).equal(1);
