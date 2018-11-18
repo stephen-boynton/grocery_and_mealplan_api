@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --check-leaks --recursive"
+    "test": "mocha --check-leaks --recursive",
+    "fix": "node_modules/eslint/bin/eslint.js -c .eslintrc.json lib/* --fix"
   },
   "author": "",
   "license": "ISC",
