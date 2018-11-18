@@ -13,6 +13,7 @@ describe('routes', () => {
     let addMeal;
     let getMeal;
     let getTags;
+    let getAllMeals;
 
     beforeEach(() => {
       addMeal = {
@@ -29,12 +30,19 @@ describe('routes', () => {
         handler: 'get tags'
       };
 
+      getAllMeals = {
+        handler: 'get meals'
+      };
+
       validate = sandbox.stub().returns('has been validated');
 
       methods = {
-        post: sandbox.stub().returns('post!'),
-        get: sandbox.stub().returns('get!')
+        post: sandbox.stub(),
+        get: sandbox.stub()
       };
+
+      methods.post.returns(methods);
+      methods.get.returns(methods);
 
       routeStub = {
         route: sandbox.stub().returns(methods)
@@ -49,6 +57,7 @@ describe('routes', () => {
         'express-validation': validate,
         './handlers': {
           addMeal,
+          getAllMeals,
           getMeal,
           getTags
         }
@@ -70,13 +79,13 @@ describe('routes', () => {
       ]);
       should(methods.post.callCount).equal(1);
       should(methods.post.args).deepEqual([['has been validated', 'handler']]);
-      should(methods.get.callCount).equal(2);
+      should(methods.get.callCount).equal(3);
       should(methods.get.args).deepEqual([
+        ['get meals'],
         ['has been validated', 'meal'],
         ['get tags']
       ]);
       should(validate.callCount).equal(2);
-      should(validate.args).deepEqual([['validation'], ['get']]);
     });
   });
 });
