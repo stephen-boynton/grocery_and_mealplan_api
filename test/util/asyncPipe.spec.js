@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const should = require('should');
 const asyncPipe = require('../../lib/util/asyncPipe');
 

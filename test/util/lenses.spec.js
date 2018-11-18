@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const should = require('should');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();

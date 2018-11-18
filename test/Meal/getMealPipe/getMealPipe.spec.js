@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const sinon = require('sinon');
 const should = require('should');
 const proxyquire = require('proxyquire').noCallThru();
@@ -19,7 +20,7 @@ describe('Meal', () => {
           mongo: {
             findOneFromMongo: () => mongoStub
           },
-          asyncPipe: asyncPipe
+          asyncPipe
         },
         mongodb: {
           ObjectId: objectIdStub

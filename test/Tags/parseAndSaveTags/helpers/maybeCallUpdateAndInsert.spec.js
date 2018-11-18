@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const sinon = require('sinon');
 const should = require('should');
 const proxyquire = require('proxyquire');

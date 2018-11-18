@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const should = require('should');
 const promiseAll = require('../../lib/util/promiseAll');
 
