@@ -57,7 +57,7 @@ describe('util', () => {
         should(dbInnerStub.collection.callCount).equal(1);
         should(dbInnerStub.collection.args).deepEqual([['collection']]);
         should(innerMongo.findOneAsync.callCount).equal(1);
-        should(innerMongo.findOneAsync.args).deepEqual([['data']]);
+        should(innerMongo.findOneAsync.args).deepEqual([['data', {}]]);
         should(loggerStub.info.callCount).equal(1);
         should(loggerStub.info.args).deepEqual([
           [['findOneAsync', 'Collection: collection'], 'data']
@@ -80,7 +80,7 @@ describe('util', () => {
           should(dbInnerStub.collection.callCount).equal(1);
           should(dbInnerStub.collection.args).deepEqual([['collection']]);
           should(innerMongo.findOneAsync.callCount).equal(1);
-          should(innerMongo.findOneAsync.args).deepEqual([['data']]);
+          should(innerMongo.findOneAsync.args).deepEqual([['data', {}]]);
           should(loggerStub.info.callCount).equal(1);
           should(loggerStub.info.args).deepEqual([
             [['findOneAsync', 'Collection: collection'], 'data']

@@ -14,6 +14,7 @@ describe('routes', () => {
     let getMeal;
     let getTags;
     let getAllMeals;
+    let postGroceries;
 
     beforeEach(() => {
       addMeal = {
@@ -32,6 +33,11 @@ describe('routes', () => {
 
       getAllMeals = {
         handler: 'get meals'
+      };
+
+      postGroceries = {
+        valdiation: 'post',
+        handler: 'groceries'
       };
 
       validate = sandbox.stub().returns('has been validated');
@@ -59,7 +65,8 @@ describe('routes', () => {
           addMeal,
           getAllMeals,
           getMeal,
-          getTags
+          getTags,
+          postGroceries
         }
       });
     });
@@ -71,21 +78,25 @@ describe('routes', () => {
     it('should route with the correct params', async () => {
       should(expressStub.Router.callCount).equal(1);
       should(expressStub.Router.args).deepEqual([[]]);
-      should(routeStub.route.callCount).equal(3);
+      should(routeStub.route.callCount).equal(4);
       should(routeStub.route.args).deepEqual([
         ['/meals/'],
         ['/meals/:meal/'],
         ['/tags/'],
+        ['/groceries/'],
       ]);
-      should(methods.post.callCount).equal(1);
-      should(methods.post.args).deepEqual([['has been validated', 'handler']]);
+      should(methods.post.callCount).equal(2);
+      should(methods.post.args).deepEqual([
+        ['has been validated', 'handler'],
+        ['has been validated', 'groceries']
+      ]);
       should(methods.get.callCount).equal(3);
       should(methods.get.args).deepEqual([
         ['get meals'],
         ['has been validated', 'meal'],
         ['get tags']
       ]);
-      should(validate.callCount).equal(2);
+      should(validate.callCount).equal(3);
     });
   });
 });
