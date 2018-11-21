@@ -28,12 +28,26 @@ describe('Grocery', () => {
     it('should call appropriate functions, and return expect response', async () => {
       mongoStub.resolves('boom shakalakah');
       setStub.resolves('done did');
-      const result = await pipe({ start: 'here we go' });
-      should(result).deepEqual({ start: 'here we go', current: true });
+      const result = await pipe({ start: 'here we go', items: ['ham', 'thyme'] });
+      should(result).deepEqual({
+        start: 'here we go',
+        items: [{ item: 'ham', active: true }, { item: 'thyme', active: true }],
+        current: true
+      });
       should(mongoStub.callCount).equal(1);
-      should(mongoStub.args).deepEqual([[{ start: 'here we go', current: true }]]);
+      should(mongoStub.args).deepEqual([[
+        {
+          start: 'here we go',
+          items: [{ item: 'ham', active: true }, { item: 'thyme', active: true }],
+          current: true
+        }
+      ]]);
       should(setStub.callCount).equal(1);
-      should(setStub.args).deepEqual([[{ start: 'here we go', current: true }]]);
+      should(setStub.args).deepEqual([[{
+        start: 'here we go',
+        items: [{ item: 'ham', active: true }, { item: 'thyme', active: true }],
+        current: true
+      }]]);
     });
   });
 });

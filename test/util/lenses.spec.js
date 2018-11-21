@@ -29,15 +29,20 @@ describe('util', () => {
     });
 
     it('should build lenses with the correct params', async () => {
-      should(lensStub.callCount).equal(2);
+      should(lensStub.callCount).equal(3);
       should(lensStub.args).deepEqual([
         ['prop!', 'assoc!'],
-        ['prop!', 'assoc!']
+        ['prop!', 'assoc!'],
+        ['prop!', 'assoc!'],
       ]);
-      should(propStub.callCount).equal(2);
-      should(propStub.args).deepEqual([['date_created'], ['date_modified']]);
-      should(assocStub.callCount).equal(2);
-      should(assocStub.args).deepEqual([['date_created'], ['date_modified']]);
+      should(propStub.callCount).equal(3);
+      should(propStub.args).deepEqual([
+        ['date_created'], ['date_modified'], ['items']
+      ]);
+      should(assocStub.callCount).equal(3);
+      should(assocStub.args).deepEqual([
+        ['date_created'], ['date_modified'], ['items']
+      ]);
     });
   });
 });
